@@ -1,4 +1,4 @@
-package com.matthewrathbone.example;
+package ikang.hive.example;
 
 import java.util.ArrayList;
 import java.util.List;

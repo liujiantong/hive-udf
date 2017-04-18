@@ -1,4 +1,4 @@
-package com.matthewrathbone.example;
+package ikang.hive.example;
 
 import junit.framework.Assert;
 

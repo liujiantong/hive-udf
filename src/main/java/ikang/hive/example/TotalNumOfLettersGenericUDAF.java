@@ -1,4 +1,4 @@
-package com.matthewrathbone.example;
+package ikang.hive.example;
 
 import org.apache.hadoop.hive.ql.exec.UDFArgumentTypeException;
 import org.apache.hadoop.hive.ql.metadata.HiveException;
@@ -77,12 +77,22 @@ public class TotalNumOfLettersGenericUDAF extends AbstractGenericUDAFResolver {
 
         /**
          * class for storing the current sum of letters
-         */
+         *
         static class LetterSumAgg implements AggregationBuffer {
             int sum = 0;
             void add(int num){
             	sum += num;
             }
+        }*/
+
+        static class LetterSumAgg extends AbstractAggregationBuffer {
+            int sum = 0;
+            void add(int num){
+                sum += num;
+            }
+
+            @Override
+            public int estimate() { return 16; }
         }
 
         @Override
@@ -93,10 +103,12 @@ public class TotalNumOfLettersGenericUDAF extends AbstractGenericUDAFResolver {
 
         @Override
         public void reset(AggregationBuffer agg) throws HiveException {
-        	LetterSumAgg myagg = new LetterSumAgg();
+        	// LetterSumAgg myagg = new LetterSumAgg();
+            LetterSumAgg myapp = (LetterSumAgg)agg;
+            myapp.sum = 0;
         }
         
-        private boolean warned = false;
+        // private boolean warned = false;
 
         @Override
         public void iterate(AggregationBuffer agg, Object[] parameters)

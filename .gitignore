@@ -1,1 +1,3 @@
-target/*
+target/
+.idea/
+hive-extensions.iml
