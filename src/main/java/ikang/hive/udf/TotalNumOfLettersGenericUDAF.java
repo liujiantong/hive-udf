@@ -1,4 +1,4 @@
-package ikang.hive.example;
+package ikang.hive.udf;
 
 import org.apache.hadoop.hive.ql.exec.UDFArgumentTypeException;
 import org.apache.hadoop.hive.ql.metadata.HiveException;
@@ -72,7 +72,6 @@ public class TotalNumOfLettersGenericUDAF extends AbstractGenericUDAFResolver {
             outputOI = ObjectInspectorFactory.getReflectionObjectInspector(Integer.class,
                     ObjectInspectorOptions.JAVA);
             return outputOI;
-
         }
 
         /**
@@ -150,6 +149,5 @@ public class TotalNumOfLettersGenericUDAF extends AbstractGenericUDAFResolver {
             total = myagg.sum;
             return myagg.sum;
         }
-
     }
 }

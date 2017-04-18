@@ -1,4 +1,4 @@
-package ikang.hive.example;
+package ikang.hive.udf;
 
 import java.util.ArrayList;
 import java.util.List;
