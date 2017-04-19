@@ -1,8 +1,9 @@
-package ikang.hive.udf;
+package ikang.hive.example;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import ikang.hive.example.ComplexUDFExample;
 import junit.framework.Assert;
 
 import org.apache.hadoop.hive.ql.metadata.HiveException;

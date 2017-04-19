@@ -1,7 +1,8 @@
-package ikang.hive.udf;
+package ikang.hive.example;
 
 import java.util.ArrayList;
 
+import ikang.hive.example.NameParserGenericUDTF;
 import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.PrimitiveObjectInspectorFactory;
 

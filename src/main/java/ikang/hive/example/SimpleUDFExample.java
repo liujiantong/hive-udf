@@ -1,4 +1,4 @@
-package ikang.hive.udf;
+package ikang.hive.example;
 
 import org.apache.hadoop.hive.ql.exec.Description;
 import org.apache.hadoop.hive.ql.exec.UDF;

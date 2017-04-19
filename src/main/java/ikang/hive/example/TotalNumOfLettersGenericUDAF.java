@@ -1,10 +1,11 @@
-package ikang.hive.udf;
+package ikang.hive.example;
 
 import org.apache.hadoop.hive.ql.exec.UDFArgumentTypeException;
 import org.apache.hadoop.hive.ql.metadata.HiveException;
 import org.apache.hadoop.hive.ql.parse.SemanticException;
 import org.apache.hadoop.hive.ql.udf.generic.AbstractGenericUDAFResolver;
 import org.apache.hadoop.hive.ql.udf.generic.GenericUDAFEvaluator;
+import org.apache.hadoop.hive.ql.util.JavaDataModel;
 import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspectorFactory;
 import org.apache.hadoop.hive.serde2.objectinspector.PrimitiveObjectInspector;
@@ -91,7 +92,7 @@ public class TotalNumOfLettersGenericUDAF extends AbstractGenericUDAFResolver {
             }
 
             @Override
-            public int estimate() { return 16; }
+            public int estimate() { return JavaDataModel.PRIMITIVES1; }
         }
 
         @Override

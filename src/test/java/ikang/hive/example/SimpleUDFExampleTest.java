@@ -1,5 +1,6 @@
-package ikang.hive.udf;
+package ikang.hive.example;
 
+import ikang.hive.example.SimpleUDFExample;
 import junit.framework.Assert;
 
 import org.apache.hadoop.io.Text;

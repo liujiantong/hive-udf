@@ -1,4 +1,4 @@
-package ikang.hive.udf;
+package ikang.hive.example;
 
 import org.apache.hadoop.hive.ql.exec.UDFArgumentException;
 import org.apache.hadoop.hive.ql.metadata.HiveException;
