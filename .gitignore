@@ -1,4 +1,4 @@
 target/
 .idea/
-*.iml
+ikang-hive-udf.iml
 .idea/libraries/Maven__asm_asm_3_1.xml
