@@ -21,9 +21,8 @@ mvn clean package
 ## Run
 
 ```
-%> hive
-hive> ADD JAR /path/to/ikang-hive-udf-0.1.0.jar;
+%> sudo -u hdfs hive
+hive> add jar /path/to/ikang-hive-udf-0.1.0.jar;
 hive> create temporary function collect as 'ikang.hive.udf.CollectAggUDAF';
-hive> select hello(firstname) from people limit 10;
-
+hive> select collect(alias) from people limit 10;
 ```
