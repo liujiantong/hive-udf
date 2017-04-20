@@ -6,7 +6,6 @@ import org.apache.hadoop.hive.ql.metadata.HiveException;
 import org.apache.hadoop.hive.ql.parse.SemanticException;
 import org.apache.hadoop.hive.ql.udf.generic.AbstractGenericUDAFResolver;
 import org.apache.hadoop.hive.ql.udf.generic.GenericUDAFEvaluator;
-//import org.apache.hadoop.hive.ql.util.JavaDataModel;
 import org.apache.hadoop.hive.serde2.objectinspector.*;
 import org.apache.hadoop.hive.serde2.typeinfo.TypeInfo;
 
@@ -18,10 +17,12 @@ import java.util.List;
  * Created by liutao on 2017/4/18.
  * 1. add jar /path/to/ikang-hive-udf-0.1.0.jar;
  * 2. create temporary function collect as 'ikang.hive.udf.CollectAggUDAF';
- * 3. select workno, concat_ws(',', collect(code)) from collecttest group by workno;
+ * 3. select workno, concat_ws(',', collect(col1, col2)) from collecttest group by workno;
  */
-@Description(name = "collect", value = "_FUNC_(x) - Returns a list of objects. " +
-        "CAUTION will easily OOM on large data sets" )
+@Description(name = "collect",
+value = "_FUNC_(col1, col2) - Returns a list of objects. CAUTION will easily OOM on large data sets",
+extended = "The function takes columns as arguments and returns a list.\n" +
+        "Examples:\n select workno, collect(col1, col2) from collecttest group by workno")
 public class CollectAggUDAF extends AbstractGenericUDAFResolver {
 
     public CollectAggUDAF() {
@@ -30,9 +31,9 @@ public class CollectAggUDAF extends AbstractGenericUDAFResolver {
 
     public static class CollectAggEvaluator extends GenericUDAFEvaluator {
 
-        private PrimitiveObjectInspector inputOI;
-        private StandardListObjectInspector listOI;
-        private StandardListObjectInspector internalMergeOI;
+        private transient PrimitiveObjectInspector inputOI;
+        private transient StandardListObjectInspector listOI;
+        private transient StandardListObjectInspector internalMergeOI;
 
         @Override
         public ObjectInspector init(Mode m, ObjectInspector[] parameters) throws HiveException {
@@ -75,12 +76,11 @@ public class CollectAggUDAF extends AbstractGenericUDAFResolver {
         // Map side
         @Override
         public void iterate(AggregationBuffer agg, Object[] parameters) throws HiveException {
-            assert (parameters.length == 1);
-
-            Object p = parameters[0];
-            if (p != null) {
-                CollectAggBuffer myagg = (CollectAggBuffer) agg;
-                putIntoList(p, myagg);
+            for (Object p : parameters) {
+                if (p != null) {
+                    CollectAggBuffer myagg = (CollectAggBuffer) agg;
+                    putIntoList(p, myagg);
+                }
             }
         }
 
@@ -129,14 +129,12 @@ public class CollectAggUDAF extends AbstractGenericUDAFResolver {
     @Override
     public GenericUDAFEvaluator getEvaluator(TypeInfo[] parameters)
             throws SemanticException {
-        if (parameters.length != 1) {
-            throw new UDFArgumentTypeException(parameters.length - 1,
-                    "Exactly one argument is expected.");
-        }
-        if (parameters[0].getCategory() != ObjectInspector.Category.PRIMITIVE) {
-            throw new UDFArgumentTypeException(0,
-                "Only primitive type arguments are accepted but "
-                        + parameters[0].getTypeName() + " was passed as parameter 1.");
+        for (int i=0; i<parameters.length; i++) {
+            if (parameters[i].getCategory() != ObjectInspector.Category.PRIMITIVE) {
+                throw new UDFArgumentTypeException(i,
+                        "Only primitive type arguments are accepted but "
+                                + parameters[i].getTypeName() + " was passed as parameter " + i);
+            }
         }
 
         return new CollectAggEvaluator();
