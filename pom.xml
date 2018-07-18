@@ -22,11 +22,11 @@
     </build>
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>ikang.hive.udf</groupId>
-    <artifactId>ikang-hive-udf</artifactId>
+    <groupId>hive.udf</groupId>
+    <artifactId>hive-udf</artifactId>
     <packaging>jar</packaging>
     <version>0.1.0</version>
-    <name>ikang-hive-udf</name>
+    <name>hive-udf</name>
     <url>http://maven.apache.org</url>
 
     <dependencies>
