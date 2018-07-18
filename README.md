@@ -1,4 +1,4 @@
-# Hive UDF Examples for iKang
+# Hive UDF Examples
 
 
 ## Compile
